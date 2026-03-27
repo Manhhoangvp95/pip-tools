@@ -53,10 +53,11 @@ ONLY_NEGATIVE_OPTIONS = {"--no-index"}
 
 def key_from_ireq(ireq: InstallRequirement) -> str:
     """Get a standardized key for an InstallRequirement."""
-    if ireq.req is None and ireq.link is not None:
-        return str(ireq.link)
-    else:
-        return key_from_req(ireq.req)
+    if ireq.req is None:
+        if ireq.link is not None:
+            return str(ireq.link)
+        return str(ireq)
+    return key_from_req(ireq.req)
 
 
 def key_from_req(req: InstallRequirement | Requirement | PipRequirement) -> str:
